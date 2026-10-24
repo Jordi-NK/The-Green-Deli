@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en-ZA">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f0e4">
+    <meta name="description" content="A little sunshine on Main Road. Find The Green Deli in Observatory, Cape Town, and browse our suggested hot drinks, smoothies and shakes.">
+    <title>The Green Deli — Good things, slowly sipped</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        color-scheme: light;
+        --cream: #f6f0e4;
+        --paper: #fffdf8;
+        --ink: #26352c;
+        --forest: #244c3c;
+        --forest-light: #32654e;
+        --muted: #78786d;
+        --orange: #d4774b;
+        --gold: #e5b65c;
+        --line: #e7dfd0;
+        --shadow: 0 16px 48px rgb(54 47 33 / 9%);
+        --serif: "Fraunces", Georgia, serif;
+        --sans: "DM Sans", Arial, sans-serif;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; }
+      html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+      body {
+        margin: 0;
+        background: var(--cream);
+        color: var(--ink);
+        font-family: var(--sans);
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: inherit; }
+      button { font: inherit; }
+      .shell { width: min(1160px, calc(100% - 48px)); margin-inline: auto; }
+      .announcement {
+        padding: 9px 16px;
+        background: var(--forest);
+        color: #f8f2e8;
+        text-align: center;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: .13em;
+        text-transform: uppercase;
+      }
+      .announcement span { color: #f0c776; }
+      .header {
+        position: sticky;
+        z-index: 5;
+        top: 0;
+        border-bottom: 1px solid rgb(38 53 44 / 8%);
+        background: rgb(246 240 228 / 94%);
+        backdrop-filter: blur(14px);
+      }
+      .nav {
+        display: flex;
+        min-height: 76px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+      .brand { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; }
+      .brand-mark {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border: 1.5px solid var(--forest);
+        border-radius: 50%;
+        color: var(--forest);
+      }
+      .brand-mark svg { width: 23px; height: 23px; }
+      .menu-icon, .menu-icon::before, .menu-icon::after {
+        position: absolute;
+        width: 16px;
+        height: 1.5px;
+        border-radius: 2px;
+        background: currentColor;
+        content: "";
+        transition: transform .2s;
+      }
+      .menu-icon { position: relative; }
+      .menu-icon::before { top: -5px; left: 0; }
+      .menu-icon::after { top: 5px; left: 0; }
+      .menu-toggle[aria-expanded="true"] .menu-icon { background: transparent; }
+      .menu-toggle[aria-expanded="true"] .menu-icon::before { top: 0; transform: rotate(45deg); }
+      .menu-toggle[aria-expanded="true"] .menu-icon::after { top: 0; transform: rotate(-45deg); }
+      .brand-name { font-family: var(--serif); font-size: 20px; font-weight: 700; letter-spacing: -.04em; }
+      .brand-name small {
+        display: block;
+        margin-top: 2px;
+        font-family: var(--sans);
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+      }
+      .nav-links { display: flex; align-items: center; gap: 31px; }
+      .nav-links a { color: var(--ink); font-size: 13px; font-weight: 600; text-decoration: none; }
+      .nav-links a:hover, .nav-links a:focus-visible { color: var(--orange); }
+      .nav-links .nav-cta {
+        padding: 12px 18px;
+        border-radius: 999px;
+        background: var(--forest);
+        color: white;
+        transition: background .2s, transform .2s;
+      }
+      .nav-links .nav-cta:hover { transform: translateY(-1px); background: var(--forest-light); color: white; }
+      .menu-toggle {
+        display: none;
+        width: 42px;
+        height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: var(--paper);
+        color: var(--ink);
+        cursor: pointer;
+        position: relative;
+        display: grid;
+        place-items: center;
+      }
+
+      .hero { position: relative; overflow: hidden; padding: 74px 0 84px; }
+      .hero::before {
+        position: absolute;
+        top: -205px;
+        right: -174px;
+        width: 510px;
+        height: 510px;
+        border: 1px solid rgb(36 76 60 / 10%);
+        border-radius: 50%;
+        content: "";
+      }
+      .hero::after {
+        position: absolute;
+        top: -168px;
+        right: -137px;
+        width: 435px;
+        height: 435px;
+        border: 1px solid rgb(36 76 60 / 9%);
+        border-radius: 50%;
+        content: "";
+      }
+      .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.02fr .98fr; align-items: center; gap: 48px; }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        color: var(--forest);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+      }
+      .eyebrow::before { width: 24px; height: 1px; background: var(--orange); content: ""; }
+      h1, h2, h3, p { margin-top: 0; }
+      .hero h1 {
+        max-width: 600px;
+        margin: 22px 0 18px;
+        font-family: var(--serif);
+        font-size: clamp(54px, 7.2vw, 91px);
+        font-weight: 600;
+        letter-spacing: -.065em;
+        line-height: .99;
+      }
+      .hero h1 em { color: var(--forest); font-weight: 500; }
+      .hero-copy { max-width: 425px; margin-bottom: 28px; color: #676b60; font-size: 16px; line-height: 1.75; }
+      .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 13px; }
+      .button {
+        display: inline-flex;
+        min-height: 49px;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        padding: 0 21px;
+        border: 1px solid var(--forest);
+        border-radius: 999px;
+        background: var(--forest);
+        color: #fffdf8;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: transform .2s, background .2s;
+      }
+      .button:hover { transform: translateY(-2px); background: var(--forest-light); }
+      .button-secondary { background: transparent; color: var(--forest); }
+      .button-secondary:hover { background: #e9e8d8; color: var(--forest); }
+      .hero-note { margin: 21px 0 0; color: var(--muted); font-size: 11px; }
+      .hero-art {
+        position: relative;
+        min-height: 410px;
+        overflow: hidden;
+        border: 1px solid rgb(255 255 255 / 40%);
+        border-radius: 49% 49% 26px 26px;
+        background: #d8c7a1;
+        box-shadow: var(--shadow);
+      }
+      .hero-art::before {
+        position: absolute;
+        z-index: 2;
+        inset: 17px;
+        border: 1px solid rgb(255 253 248 / 44%);
+        border-radius: inherit;
+        content: "";
+      }
+      .hero-art::after {
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        background: linear-gradient(180deg, rgb(22 36 28 / 5%) 35%, rgb(22 36 28 / 58%) 100%);
+        content: "";
+      }
+      .hero-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .art-caption {
+        position: absolute;
+        z-index: 3;
+        right: 30px;
+        bottom: 28px;
+        left: 30px;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        color: #fffdf8;
+      }
+      .art-caption strong { font-family: var(--serif); font-size: 23px; font-weight: 500; }
+      .art-caption span { font-size: 10px; letter-spacing: .13em; text-transform: uppercase; }
+
+      .ticker { overflow: hidden; padding: 15px 0; background: var(--forest); color: #f8f2e8; }
+      .ticker-inner { display: flex; justify-content: center; gap: clamp(20px, 4vw, 56px); white-space: nowrap; }
+      .ticker-item { display: inline-flex; align-items: center; gap: 12px; font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+      .ticker-dot { width: 6px; height: 6px; border: 1px solid var(--gold); border-radius: 50%; }
+
+      .section { padding: 100px 0; }
+      .menu-section { background: var(--paper); }
+      .section-top { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 35px; }
+      .section h2 {
+        margin: 13px 0 0;
+        font-family: var(--serif);
+        font-size: clamp(40px, 5vw, 61px);
+        font-weight: 600;
+        letter-spacing: -.055em;
+        line-height: 1.05;
+      }
+      .section-intro { max-width: 360px; margin: 0 0 4px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+      .menu-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 25px; }
+      .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+      .tab {
+        min-height: 39px;
+        padding: 0 17px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: transparent;
+        color: #62665d;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+        transition: background .2s, color .2s, border-color .2s;
+      }
+      .tab:hover, .tab[aria-selected="true"] { border-color: var(--forest); background: var(--forest); color: white; }
+      .currency-note { color: var(--muted); font-size: 11px; }
+      .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+      .drink-card {
+        position: relative;
+        display: flex;
+        min-height: 250px;
+        flex-direction: column;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--paper);
+        transition: border-color .2s, transform .2s, box-shadow .2s;
+      }
+      .drink-card:hover { transform: translateY(-3px); border-color: #c6c7b1; box-shadow: 0 12px 24px rgb(54 47 33 / 6%); }
+      .drink-card[hidden] { display: none; }
+      .drink-photo {
+        width: calc(100% + 24px);
+        aspect-ratio: 1.8;
+        margin: -12px -12px 14px;
+        border-radius: 15px 15px 0 0;
+        background: #e6e0d3;
+        object-fit: cover;
+      }
+      .drink-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+      .drink-price { color: var(--forest); font-family: var(--serif); font-size: 20px; font-weight: 600; }
+      .drink-card h3 { margin: 9px 0 6px; font-family: var(--serif); font-size: 22px; font-weight: 600; letter-spacing: -.035em; }
+      .drink-card p { max-width: 290px; margin-bottom: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+      .menu-footnote { display: flex; align-items: flex-start; gap: 12px; margin-top: 20px; padding: 15px 17px; border-radius: 10px; background: #f6f0e4; color: #66675d; font-size: 11px; line-height: 1.65; }
+      .note-mark { width: 3px; flex: 0 0 3px; align-self: stretch; border-radius: 3px; background: var(--orange); }
+      .menu-footnote strong { color: var(--forest); }
+
+      .story-section { position: relative; overflow: hidden; }
+      .story-grid { display: grid; grid-template-columns: .92fr 1.08fr; align-items: center; gap: 85px; }
+      .story-art {
+        position: relative;
+        min-height: 365px;
+        overflow: hidden;
+        border-radius: 18px;
+        background: #dce0cf;
+      }
+      .story-art::after { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(22 36 28 / 5%), rgb(22 36 28 / 20%)); content: ""; }
+      .story-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .story-badge {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        z-index: 2;
+        display: grid;
+        width: 95px;
+        height: 95px;
+        place-items: center;
+        border: 1px solid rgb(255 253 248 / 60%);
+        border-radius: 50%;
+        background: var(--orange);
+        color: white;
+        font-family: var(--serif);
+        font-size: 17px;
+        line-height: 1.1;
+        text-align: center;
+        transform: rotate(9deg);
+      }
+      .story-copy h2 { max-width: 470px; margin-bottom: 18px; }
+      .story-copy p { max-width: 470px; margin-bottom: 15px; color: #676b60; font-size: 14px; line-height: 1.8; }
+      .story-address { display: inline-flex; align-items: center; gap: 8px; margin-top: 7px; color: var(--forest); font-size: 13px; font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+      .visit-section { padding: 0 0 88px; }
+      .visit-card {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 28px;
+        overflow: hidden;
+        padding: 48px 54px;
+        border-radius: 18px;
+        background: var(--forest);
+        color: #fffdf8;
+      }
+      .visit-card::after {
+        position: absolute;
+        top: -120px;
+        right: 18%;
+        width: 330px;
+        height: 330px;
+        border: 1px solid rgb(255 255 255 / 13%);
+        border-radius: 50%;
+        box-shadow: 0 0 0 35px rgb(255 255 255 / 5%), 0 0 0 70px rgb(255 255 255 / 4%);
+        content: "";
+      }
+      .visit-copy, .visit-card .button { position: relative; z-index: 1; }
+      .visit-copy .eyebrow { color: #f2cf8d; }
+      .visit-copy h2 { max-width: 580px; margin: 13px 0 9px; font-family: var(--serif); font-size: clamp(32px, 4vw, 48px); font-weight: 500; letter-spacing: -.04em; }
+      .visit-copy p { margin: 0; color: #d7e0d7; font-size: 13px; }
+      .visit-card .button { flex-shrink: 0; border-color: var(--cream); background: var(--cream); color: var(--forest); }
+      .visit-card .button:hover { background: white; }
+      footer { padding: 27px 0; border-top: 1px solid var(--line); }
+      .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 10px; }
+      .footer-inner p { margin: 0; }
+      .footer-brand { color: var(--forest); font-family: var(--serif); font-size: 16px; font-weight: 600; }
+
+      @media (max-width: 760px) {
+        .shell { width: min(100% - 36px, 560px); }
+        .nav { min-height: 66px; }
+        .menu-toggle { display: grid; place-items: center; }
+        .nav-links {
+          position: absolute;
+          top: 66px;
+          right: 0;
+          left: 0;
+          display: none;
+          align-items: stretch;
+          gap: 0;
+          padding: 8px 18px 16px;
+          border-bottom: 1px solid var(--line);
+          background: var(--cream);
+        }
+        .nav-links.is-open { display: flex; flex-direction: column; }
+        .nav-links a { padding: 13px 4px; }
+        .nav-links .nav-cta { margin-top: 6px; padding: 12px 16px; text-align: center; }
+        .hero { padding: 55px 0 59px; }
+        .hero-grid { grid-template-columns: 1fr; gap: 33px; }
+        .hero h1 { max-width: 500px; font-size: clamp(57px, 13vw, 80px); }
+        .hero-art { min-height: 340px; border-radius: 48% 48% 22px 22px; }
+        .ticker-inner { justify-content: flex-start; width: max-content; animation: marquee 22s linear infinite; }
+        @keyframes marquee { to { transform: translateX(-28%); } }
+        .section { padding: 70px 0; }
+        .section-top { align-items: flex-start; flex-direction: column; gap: 13px; margin-bottom: 26px; }
+        .section-intro { max-width: 440px; }
+        .menu-toolbar { align-items: flex-start; flex-direction: column; gap: 13px; }
+        .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .drink-card { min-height: 230px; padding: 10px; }
+        .drink-photo { width: calc(100% + 20px); margin: -10px -10px 12px; }
+        .drink-card h3 { font-size: 19px; }
+        .drink-card p { font-size: 11px; }
+        .story-grid { grid-template-columns: 1fr; gap: 34px; }
+        .story-art { min-height: 310px; }
+        .visit-section { padding-bottom: 60px; }
+        .visit-card { align-items: flex-start; flex-direction: column; padding: 34px 27px; }
+      }
+      @media (max-width: 420px) {
+        .shell { width: calc(100% - 30px); }
+        .announcement { font-size: 9px; }
+        .menu-grid { grid-template-columns: 1fr; }
+        .drink-card { min-height: auto; }
+        .footer-inner { align-items: flex-start; flex-direction: column; gap: 8px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="announcement"><span>Observatory, Cape Town</span> &nbsp;·&nbsp; A little sunshine on Main Road</div>
+    <header class="header">
+      <nav class="nav shell" aria-label="Main navigation">
+        <a class="brand" href="#home" aria-label="The Green Deli home">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.7 4.8C11.5 4.6 6.3 7 5.4 11.4c-.7 3.3 2.1 5.8 5.1 5.2 4.5-.9 7-6.2 8.2-11.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M4.5 20c2.2-5 5.4-8 10.3-10.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          <span class="brand-name">The Green Deli<small>Good things, good company</small></span>
+        </a>
+        <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-links"><span class="menu-icon" aria-hidden="true"></span></button>
+        <div class="nav-links" id="nav-links">
+          <a href="#menu">The drinks</a>
+          <a href="#story">Our little corner</a>
+          <a href="#visit" class="nav-cta">Come say hello <span aria-hidden="true">↗</span></a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-grid shell">
+          <div>
+            <span class="eyebrow">Your neighbourhood happy place</span>
+            <h1>Slow sips.<br><em>Sunny moods.</em></h1>
+            <p class="hero-copy">A cosy little deli on Observatory’s Main Road, pouring feel-good drinks and making room for one more at the table.</p>
+            <div class="hero-actions">
+              <a class="button" href="#menu">Find your favourite <span aria-hidden="true">↓</span></a>
+              <a class="button button-secondary" href="#visit">Find us in Obs</a>
+            </div>
+            <p class="hero-note">29 Lower Main Road · Observatory, Cape Town</p>
+          </div>
+          <div class="hero-art">
+            <img class="hero-image" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" alt="Freshly poured coffee in a ceramic cup" fetchpriority="high">
+            <div class="art-caption"><strong>Made for the moment.</strong><span>Obs · Cape Town</span></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="ticker" aria-label="Hot drinks, smoothies, good company, Observatory Cape Town">
+        <div class="ticker-inner shell">
+          <span class="ticker-item"><span class="ticker-dot" aria-hidden="true"></span> Hot drinks</span>
+          <span class="ticker-item"><span class="ticker-dot" aria-hidden="true"></span> Smoothies &amp; shakes</span>
+          <span class="ticker-item"><span class="ticker-dot" aria-hidden="true"></span> Good company</span>
+          <span class="ticker-item"><span class="ticker-dot" aria-hidden="true"></span> Observatory, Cape Town</span>
+        </div>
+      </div>
+
+      <section class="section menu-section" id="menu">
+        <div class="shell">
+          <div class="section-top">
+            <div>
+              <span class="eyebrow">Something lovely to sip</span>
+              <h2>A little menu<br>of good moods.</h2>
+            </div>
+            <p class="section-intro">The comforting classics, the fruity favourites, and a few little treats for your walk around Obs.</p>
+          </div>
+          <div class="menu-toolbar">
+            <div class="tabs" role="tablist" aria-label="Filter drinks by type">
+              <button class="tab" id="tab-all" type="button" role="tab" aria-selected="true" aria-controls="drink-menu" data-filter="all">All the good stuff</button>
+              <button class="tab" id="tab-hot" type="button" role="tab" aria-selected="false" aria-controls="drink-menu" data-filter="hot">Hot drinks</button>
+              <button class="tab" id="tab-cold" type="button" role="tab" aria-selected="false" aria-controls="drink-menu" data-filter="cold">Smoothies &amp; shakes</button>
+            </div>
+            <span class="currency-note">Prices in South African rand (R)</span>
+          </div>
+          <div class="menu-grid" id="drink-menu" role="tabpanel" aria-labelledby="tab-all">
+            <article class="drink-card" data-category="hot">
+              <img class="drink-photo" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Flat white topped with latte art" loading="lazy" decoding="async">
+              <div class="drink-top"><span class="drink-price">R28</span></div>
+              <h3>Little Flat White</h3>
+              <p>Silky steamed milk, a double shot, and a very good start.</p>
+            </article>
+            <article class="drink-card" data-category="hot">
+              <img class="drink-photo" src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="A warm cup of tea" loading="lazy" decoding="async">
+              <div class="drink-top"><span class="drink-price">R24</span></div>
+              <h3>Slow Sunday Tea</h3>
+              <p>Your pick of rooibos, English breakfast, or a soothing herbal brew.</p>
+            </article>
+            <article class="drink-card" data-category="hot">
+              <img class="drink-photo" src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Hot chocolate in a cosy cafe" loading="lazy" decoding="async">
+              <div class="drink-top"><span class="drink-price">R32</span></div>
+              <h3>Cosy Hot Chocolate</h3>
+              <p>Rich, chocolatey, topped with a soft cloud of marshmallows.</p>
+            </article>
+            <article class="drink-card" data-category="hot">
+              <img class="drink-photo" src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Freshly prepared milk coffee" loading="lazy" decoding="async">
+              <div class="drink-top"><span class="drink-price">R34</span></div>
+              <h3>Honey Oat Latte</h3>
+              <p>Espresso, creamy oat milk, and a little golden drizzle.</p>
+            </article>
+            <article class="drink-card" data-category="cold">
+              <img class="drink-photo" src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Fresh berry smoothie" loading="lazy" decoding="async">
+              <div class="drink-top"><span class="drink-price">R48</span></div>
+              <h3>Berry Good Smoothie</h3>
+              <p>Strawberry, banana, and a bright little berry burst.</p>
+            </article>
+            <article class="drink-card" data-category="cold">
+              <img class="drink-photo" src="https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Bright tropical fruit smoothie" loading="lazy" decoding="async">
+              <div class="drink-top"><span class="drink-price">R48</span></div>
+              <h3>Sunshine Smoothie</h3>
+              <p>Mango, pineapple, and a splash of tropical happy.</p>
+            </article>
+            <article class="drink-card" data-category="cold">
+              <img class="drink-photo" src="https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Thick creamy milkshake" loading="lazy" decoding="async">
+              <div class="drink-top"><span class="drink-price">R52</span></div>
+              <h3>Peanut Butter Shake</h3>
+              <p>Banana, peanut butter, and a thick, creamy shake.</p>
+            </article>
+            <article class="drink-card" data-category="cold">
+              <img class="drink-photo" src="https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Chocolate shake topped with cream" loading="lazy" decoding="async">
+              <div class="drink-top"><span class="drink-price">R45</span></div>
+              <h3>Chocolate Milkshake</h3>
+              <p>A proper old-school chocolate shake, blended extra smooth.</p>
+            </article>
+            <article class="drink-card" data-category="cold">
+              <img class="drink-photo" src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Iced coffee served in a glass" loading="lazy" decoding="async">
+              <div class="drink-top"><span class="drink-price">R30</span></div>
+              <h3>Iced Coffee</h3>
+              <p>Chilled coffee, a dash of milk, and a whole lot of ice.</p>
+            </article>
+          </div>
+          <div class="menu-footnote">
+            <span class="note-mark" aria-hidden="true"></span>
+            <span><strong>A little note:</strong> This is a suggested menu with example prices, since the business card doesn’t list specific drinks or prices. Please confirm the current menu and prices in store. Infused options are available to ask about in store; availability and age restrictions may apply. Sample photos are from Unsplash; replace any image URL in this file with your own.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section story-section" id="story">
+        <div class="story-grid shell">
+          <div class="story-art">
+            <img class="story-image" src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Warm, welcoming neighbourhood cafe interior" loading="lazy" decoding="async">
+            <span class="story-badge">Made with<br>a little sunshine</span>
+          </div>
+          <div class="story-copy">
+            <span class="eyebrow">Hello from Lower Main</span>
+            <h2>Good drinks.<br>Easy company.</h2>
+            <p>The Green Deli is your friendly neighbourhood stop in Observatory — a place to pause, pick up a treat, and make an ordinary afternoon feel a bit more like a holiday.</p>
+            <p>Come by for a warm cup, a cool shake, or just a little local love. We’ll put the kettle on.</p>
+            <a class="story-address" href="https://www.google.com/maps/search/?api=1&amp;query=29+Lower+Main+Road%2C+Observatory%2C+Cape+Town" target="_blank" rel="noopener noreferrer">29 Lower Main Road, Observatory <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="visit-section shell" id="visit">
+        <div class="visit-card">
+          <div class="visit-copy">
+            <span class="eyebrow">Your next little detour</span>
+            <h2>We’ll save you a sunny spot.</h2>
+            <p>Find us at 29 Lower Main Road, Observatory, Cape Town.</p>
+          </div>
+          <a class="button" href="https://www.google.com/maps/search/?api=1&amp;query=29+Lower+Main+Road%2C+Observatory%2C+Cape+Town" target="_blank" rel="noopener noreferrer">Get directions <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner shell">
+        <span class="footer-brand">The Green Deli</span>
+        <p>29 Lower Main Road, Observatory · Cape Town, South Africa</p>
+        <p>Supported by California Consulting</p>
+      </div>
+    </footer>
+
+    <script>
+      const tabs = [...document.querySelectorAll(".tab")];
+      const cards = [...document.querySelectorAll(".drink-card")];
+      const menu = document.querySelector("#drink-menu");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const filter = tab.dataset.filter;
+          tabs.forEach((item) => item.setAttribute("aria-selected", String(item === tab)));
+          menu.setAttribute("aria-labelledby", tab.id);
+          cards.forEach((card) => {
+            card.hidden = filter !== "all" && card.dataset.category !== filter;
+          });
+        });
+      });
+
+      const menuToggle = document.querySelector(".menu-toggle");
+      const navLinks = document.querySelector("#nav-links");
+      menuToggle.addEventListener("click", () => {
+        const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+        menuToggle.setAttribute("aria-expanded", String(!isOpen));
+        menuToggle.setAttribute("aria-label", isOpen ? "Open navigation" : "Close navigation");
+        navLinks.classList.toggle("is-open", !isOpen);
+      });
+      navLinks.addEventListener("click", (event) => {
+        if (event.target.closest("a")) {
+          menuToggle.setAttribute("aria-expanded", "false");
+          menuToggle.setAttribute("aria-label", "Open navigation");
+          navLinks.classList.remove("is-open");
+        }
+      });
+    </script>
+  </body>
+</html>
